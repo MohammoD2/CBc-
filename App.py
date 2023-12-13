@@ -1,33 +1,13 @@
 import streamlit as st
 from PIL import Image
-st.title('Welcome To Ibrahim Creation ')
-st.header('Creator- Mohammod Ibrahim Hossain ')
-st.write("Contributor- Saidur Rahman safim")
 import streamlit as st
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import joblib 
+import joblib
+st.title('Welcome To Ibrahim Creation ')
+st.header('Creator- Mohammod Ibrahim Hossain ')
+st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
-
-import streamlit as st
-from PIL import Image
-import os
-
-# Print current working directory
-st.write("Current Working Directory:", os.getcwd())
-
-# Print file existence
-file_path = "E:/Work files/CBC prediction/model.pkl"
-st.write("File Exists:", os.path.exists(file_path))
-
-# Load image
-image_path = "blood.jpg"
-st.image(image_path)
-
-# Load model
-model_path = "E:/Work files/CBC prediction/model.pkl"
-st.write("Loading model from:", model_path)
-
 
 model = joblib.load("E:\Work files\CBC prediction\model.pkl")
 scaler = joblib.load("E:\Work files\CBC prediction\scaler.pkl")
