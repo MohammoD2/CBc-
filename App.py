@@ -13,14 +13,27 @@ st.image('blood.jpg')
 # model = joblib.load("E:\\Work files\\CBC prediction\\model.pkl")
 
 # scaler = joblib.load("E:\Work files\CBC prediction\scaler.pkl")
-model = os.path.join("E:/Work files/CBC prediction", "model.pkl")
-scaler = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
-if os.path.exists(model):
-    model = joblib.load(model)
-    st.success("Model loaded successfully.")
-else:
-    st.error(f"Error: Model file not found at {model}.")
+model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
+scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
 
+# Check if the files exist before loading
+if os.path.exists(model_path) and os.path.exists(scaler_path):
+    model = joblib.load(model_path)
+    scaler = joblib.load(scaler_path)
+    st.success("Model and scaler loaded successfully.")
+else:
+    model, scaler = None, None
+    st.error(f"Error: Model or scaler file not found. Check the file paths: {model_path}, {scaler_path}.")
+
+def predict_result(data):
+    if scaler is not None:
+        dataframe = pd.DataFrame([data])
+        numerical_features_transformed = scaler.transform(dataframe)
+        predict = model.predict(numerical_features_transformed)
+        return predict
+    else:
+        st.error("Error: Scaler is not loaded.")
+        return None
 def predict_result(data):
 
     dataframe = pd.DataFrame([data])
