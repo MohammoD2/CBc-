@@ -9,6 +9,24 @@ from sklearn.preprocessing import StandardScaler
 import joblib 
 st.image('blood.jpg')
 model = joblib.load("E:/Work files/CBC prediction/model.pkl".replace('\\', '/'))
+import streamlit as st
+from PIL import Image
+import os
+
+# Print current working directory
+st.write("Current Working Directory:", os.getcwd())
+
+# Print file existence
+file_path = "E:/Work files/CBC prediction/model.pkl"
+st.write("File Exists:", os.path.exists(file_path))
+
+# Load image
+image_path = "blood.jpg"
+st.image(image_path)
+
+# Load model
+model_path = "E:/Work files/CBC prediction/model.pkl"
+st.write("Loading model from:", model_path)
 
 
 model = joblib.load("E:\Work files\CBC prediction\model.pkl")
