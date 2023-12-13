@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import joblib 
 st.image('blood.jpg')
-model = joblib.load("E:/Work files/CBC prediction/model.pkl".replace('\\', '/'))
+
 import streamlit as st
 from PIL import Image
 import os
