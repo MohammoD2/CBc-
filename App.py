@@ -14,6 +14,11 @@ st.image('blood.jpg')
 # scaler = joblib.load("E:\Work files\CBC prediction\scaler.pkl")
 model = os.path.join("E:/Work files/CBC prediction", "model.pkl")
 scaler = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
+if os.path.exists(model):
+    model = joblib.load(model)
+    st.success("Model loaded successfully.")
+else:
+    st.error(f"Error: Model file not found at {model}.")
 
 def predict_result(data):
 
