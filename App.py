@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import joblib 
 import os
 
-st.title('Welcome To Ibrahim Creation ')
+st.title('Welcome To Ibrahim Creati ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
