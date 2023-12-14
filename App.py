@@ -5,16 +5,13 @@ from sklearn.preprocessing import StandardScaler
 import joblib 
 import os
 
-st.title('Welcome To Ibrahim Creati ')
+st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
-st.write(f"Model path: {model_path}")
-st.write(f"Scaler path: {scaler_path}")
 
 model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
 scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
-
 
 # Load the model and scaler
 model = joblib.load(model_path)
@@ -73,7 +70,7 @@ def main():
         prediction = predict_result(data)
         result_text = "Unhealthy" if prediction[0] == 0 else "Healthy"
 
-
+        
         if result_text == "Healthy":
           st.success(f"Great news, {Name}! Your condition is Healthy.")
           st.subheader("1. **Maintain a Balanced Diet:**")
