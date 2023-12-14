@@ -9,9 +9,12 @@ st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
+st.write(f"Model path: {model_path}")
+st.write(f"Scaler path: {scaler_path}")
 
-model_path = os.path.join("https://github.com/MohammoD2/CBc-/blob/main/model.pkl")
-scaler_path = os.path.join("https://github.com/MohammoD2/CBc-/blob/main/scaler.pkl")
+model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
+scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
+
 
 # Load the model and scaler
 model = joblib.load(model_path)
