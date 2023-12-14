@@ -5,35 +5,23 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import joblib
 import os
+import BytesIO
+import requests
 st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
+# GitHub paths
+model_url = "https://github.com/MohammoD2/CBc-/raw/main/model.pkl"
+scaler_url = "https://github.com/MohammoD2/CBc-/raw/main/scaler.pkl"
 
-# model = joblib.load("E:\\Work files\\CBC prediction\\model.pkl")
+# Download model and scaler files
+model_content = requests.get(model_url).content
+scaler_content = requests.get(scaler_url).content
 
-# scaler = joblib.load("E:\Work files\CBC prediction\scaler.pkl")
-model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
-scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
-
-# Check if the files exist before loading
-if os.path.exists(model_path) and os.path.exists(scaler_path):
-    model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
-    st.success("Model and scaler loaded successfully.")
-else:
-    model, scaler = None, None
-    st.error(f"Error: Model or scaler file not found. Check the file paths: {model_path}, {scaler_path}.")
-
-def predict_result(data):
-    if scaler is not None:
-        dataframe = pd.DataFrame([data])
-        numerical_features_transformed = scaler.transform(dataframe)
-        predict = model.predict(numerical_features_transformed)
-        return predict
-    else:
-        st.error("Error: Scaler is not loaded.")
-        return None
+# Load model and scaler
+model = joblib.load(BytesIO(model_content))
+scaler = joblib.load(BytesIO(scaler_content))
 def predict_result(data):
 
     dataframe = pd.DataFrame([data])
