@@ -3,25 +3,16 @@ from PIL import Image
 import streamlit as st
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import joblib
+import joblib 
 import os
-import BytesIO
-import requests
 st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
-# GitHub paths
-model_url = "https://github.com/MohammoD2/CBc-/raw/main/model.pkl"
-scaler_url = "https://github.com/MohammoD2/CBc-/raw/main/scaler.pkl"
-
-# Download model and scaler files
-model_content = requests.get(model_url).content
-scaler_content = requests.get(scaler_url).content
-
-# Load model and scaler
-model = joblib.load(BytesIO(model_content))
-scaler = joblib.load(BytesIO(scaler_content))
+# model = joblib.load("E:\Work files\CBC prediction\model.pkl")
+# scaler = joblib.load("E:\Work files\CBC prediction\scaler.pkl")
+model = os.path.join("E:/Work files/CBC prediction", "model.pkl")
+scaler = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
 def predict_result(data):
 
     dataframe = pd.DataFrame([data])
