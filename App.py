@@ -10,8 +10,8 @@ st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
 
-model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
-scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
+model_path = "/mount/src/cbc-/model.pkl"  # Use a relative path or adjust as needed
+scaler_path = "/mount/src/cbc-/scaler.pkl"  # Use a relative path or adjust as needed
 
 # Load the model and scaler
 model = joblib.load(model_path)
