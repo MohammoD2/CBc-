@@ -182,32 +182,30 @@ import os
 import streamlit as st
 import pandas as pd
 import joblib
-import os
+import requests
 
-st.title('Welcome To Ibrahim Creation ')
+st.title('Welcome To Ibrahim Creation')
 st.header('Creator- Mohammod Ibrahim Hossain ')
-st.write("Contributor- Saidur Rahman safim")
+st.write("Contributor- Saidur Rahman Safim")
 st.image('blood.jpg')
 
-# Define file paths
+# Define GitHub URLs for the model and scaler
 model_url = "https://github.com/MohammoD2/CBc-/blob/main/model.pkl"
 scaler_url = "https://github.com/MohammoD2/CBc-/blob/main/scaler.pkl"
 
-# Check if the files exist before loading
-if os.path.exists(model_path) and os.path.exists(scaler_path):
-    model = joblib.load(requests.get(model_url, allow_redirects=True).raw)
+# Download the model and scaler using requests
+model = joblib.load(requests.get(model_url, allow_redirects=True).raw)
+scaler = joblib.load(requests.get(scaler_url, allow_redirects=True).raw)
 
-    scaler = joblib.load(requests.get(scaler_url, allow_redirects=True).raw)
-
+# Check if the model and scaler are loaded successfully
+if model is not None and scaler is not None:
     st.success("Model and scaler loaded successfully.")
 else:
-    model, scaler = None, None
-    st.error(f"Error: Model or scaler file not found. Check the file paths: {model_path}, {scaler_path}.")
+    st.error("Error: Model or scaler file not found.")
 
 def predict_result(data):
     if scaler is not None:
-        dataframe = pd.DataFrame([data])
-        numerical_features_transformed = scaler.transform(dataframe)
+        numerical_features_transformed = scaler.transform(pd.DataFrame([data]))
         predict = model.predict(numerical_features_transformed)
         return predict
     else:
@@ -217,52 +215,17 @@ def predict_result(data):
 def main():
     st.title("Blood Test Result Predictor")
 
-    Name = st.text_input('Enter Your name:')
-    Hemoglobin = st.text_input('Enter Hemoglobin:')
-    Neutrophils = st.text_input('Enter Neutrophils:')
-    Lymphocytes = st.text_input('Enter Lymphocytes:')
-    MPV = st.text_input('Enter MPV:')
-    PCT = st.text_input('Enter PCT:')
-    PDW = st.text_input('Enter PDW:')
-    RBC = st.text_input('Enter RBC:')
-    HCT = st.text_input('Enter HCT:')
-    MCV = st.text_input('Enter MCV:')
-    MCH = st.text_input('Enter MCH:')
-    MCHC = st.text_input('Enter MCHC:')
-    RDWCV = st.text_input('Enter RDWCV:')
-    RDWSD = st.text_input('Enter RDWSD:')
-    PLCR = st.text_input('Enter PLCR:')
-    PLT = st.text_input('Enter PLT:')
-    WBC = st.text_input('Enter WBC:')
+    input_fields = ['Name', 'Hemoglobin', 'Neutrophils', 'Lymphocytes', 'MPV', 'PCT', 'PDW',
+                    'RBC', 'HCT', 'MCV', 'MCH', 'MCHC', 'RDWCV', 'RDWSD', 'PLCR', 'PLT', 'WBC']
 
-    data = {
-        'Hemoglobin': Hemoglobin,
-        'Neutrophils': Neutrophils,
-        'Lymphocytes': Lymphocytes,
-        'MPV': MPV,
-        'PCT': PCT,
-        'PDW': PDW,
-        'RBC': RBC,
-        'HCT': HCT,
-        'MCV': MCV,
-        'MCH': MCH,
-        'MCHC': MCHC,
-        'RDWCV': RDWCV,
-        'RDWSD': RDWSD,
-        'PLCR': PLCR,
-        'PLT': PLT,
-        'WBC': WBC
-    }
-
-    if st.button("Check Your Condition "):
-        prediction = predict_result(data)
-        result_text = "Unhealthy" if prediction[0] == 0 else "Healthy"
+    # Dynamic input for user
+    user_inputs = {field: st.text_input(f'Enter {field}:') for field in input_fields}
+    if st.button("Check Your Condition"):
+        prediction = predict_result(user_inputs)
+        result_text = "Healthy" if prediction[0] == 1 else "Unhealthy"
 
         if result_text == "Healthy":
-            
-            st.success(f"Great news, {Name}! Your condition is Healthy.")
-            st.subheader("1. **Maintain a Balanced Diet:**")
-            st.success(f"Great news, {Name}! Your condition is Healthy.")
+            st.success(f"Great news, {user_inputs['Name']}! Your condition is Healthy.")
             st.subheader("1. **Maintain a Balanced Diet:**")
             st.write("- Consume a variety of fruits, vegetables, whole grains, and lean proteins.")
             st.write("- Ensure adequate intake of essential nutrients such as iron, vitamin B12, and folate.")
@@ -273,7 +236,7 @@ def main():
             st.subheader("3. **Regular Exercise:**")
             st.write("- Engage in regular physical activity, such as walking, jogging, or other forms of exercise.")
             st.write("- Aim for at least 150 minutes of moderate-intensity exercise per week.")
-
+ 
             st.subheader("4. **Adequate Sleep:**")
             st.write("- Ensure you get enough quality sleep each night for overall well-being and immune function.")
 
@@ -282,14 +245,14 @@ def main():
 
             st.subheader("6. **Regular Health Check-ups:**")
             st.write("- Schedule routine health check-ups and screenings to monitor overall health.")
-   
+
             st.subheader("7. **Avoid Smoking and Excessive Alcohol:**")
             st.write("- If you smoke, consider quitting.")
             st.write("- Limit alcohol intake to moderate levels or as advised by healthcare professionals.")
 
             st.subheader("8. **Maintain a Healthy Weight:**")
             st.write("- Aim for a healthy body weight through a combination of diet and exercise.")
-  
+
             st.subheader("9. **Sun Protection:**")
             st.write("- Use sunscreen to protect your skin from harmful UV rays when exposed to the sun.")
 
@@ -297,7 +260,7 @@ def main():
             st.write("- Adhere to any specific recommendations or advice provided by your healthcare provider based on your individual health profile.")
 
         else:
-            st.error(f"Attention, {Name}! Your condition is Unhealthy.")
+            st.error(f"Attention, {user_inputs['Name']}! Your condition is Unhealthy.")
             st.subheader("Instructions for Addressing Unhealthy CBC Results:")
 
             st.subheader("1. Consult with a Healthcare Professional:")
@@ -306,14 +269,14 @@ def main():
 
             st.subheader("2. Follow-up Testing and Diagnosis:")
             st.write("- Undergo further diagnostic tests as recommended by your healthcare provider to identify the underlying cause.")
-   
+
             st.subheader("3. Medication and Treatment Plan:")
             st.write("- Adhere to any prescribed medications or treatment plan provided by your healthcare professional.")
 
             st.subheader("4. Dietary Adjustments:")
             st.write("- Modify your diet as per the recommendations of a registered dietitian to address nutritional deficiencies.")
             st.write("- Ensure an adequate intake of nutrients such as iron, vitamin B12, and folate if deficiencies are identified.")
-
+  
             st.subheader("5. Lifestyle Changes:")
             st.write("- Make necessary lifestyle changes, such as quitting smoking or reducing alcohol intake, if advised by your healthcare provider.")
 
@@ -333,8 +296,6 @@ def main():
 
             st.subheader("10. Emergency Situations:")
             st.write("- Be aware of signs and symptoms that may indicate an emergency situation, and seek immediate medical attention if necessary.")
-
-
 
 
 if __name__ == "__main__":
