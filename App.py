@@ -190,13 +190,15 @@ st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
 
 # Define file paths
-model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
-scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
+model_url = "https://github.com/MohammoD2/CBc-/blob/main/model.pkl"
+scaler_url = "https://github.com/MohammoD2/CBc-/blob/main/scaler.pkl"
 
 # Check if the files exist before loading
 if os.path.exists(model_path) and os.path.exists(scaler_path):
-    model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
+    model = joblib.load(requests.get(model_url, allow_redirects=True).raw)
+
+    scaler = joblib.load(requests.get(scaler_url, allow_redirects=True).raw)
+
     st.success("Model and scaler loaded successfully.")
 else:
     model, scaler = None, None
