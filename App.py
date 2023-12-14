@@ -1,24 +1,27 @@
 import streamlit as st
 from PIL import Image
-import streamlit as st
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import joblib 
 import os
+
 st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
 
-model = os.path.join("E:/Work files/CBC prediction", "model.pkl")
-scaler = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
-def predict_result(data):
+model_path = os.path.join("E:/Work files/CBC prediction", "model.pkl")
+scaler_path = os.path.join("E:/Work files/CBC prediction", "scaler.pkl")
 
+# Load the model and scaler
+model = joblib.load(model_path)
+scaler = joblib.load(scaler_path)
+
+def predict_result(data):
     dataframe = pd.DataFrame([data])
 
     # Use the same scaler that was fitted on the training data
     numerical_features_transformed = scaler.transform(dataframe)
-
 
     predict = model.predict(numerical_features_transformed)
     return predict
@@ -26,8 +29,7 @@ def predict_result(data):
 def main():
     st.title("Blood Test Result Predictor")
 
-
-    Name =st.text_input('Enter Your name:')
+    Name = st.text_input('Enter Your name:')
     Hemoglobin = st.text_input('Enter Hemoglobin:')
     Neutrophils = st.text_input('Enter Neutrophils:')
     Lymphocytes = st.text_input('Enter Lymphocytes:')
@@ -46,23 +48,24 @@ def main():
     WBC = st.text_input('Enter WBC:')
 
     data = {
-    'Hemoglobin': Hemoglobin,
-    'Neutrophils': Neutrophils,
-    'Lymphocytes': Lymphocytes,
-    'MPV': MPV,
-    'PCT': PCT,
-    'PDW': PDW,
-    'RBC': RBC,
-    'HCT': HCT,
-    'MCV': MCV,
-    'MCH': MCH,
-    'MCHC': MCHC,
-    'RDWCV': RDWCV,
-    'RDWSD': RDWSD,
-    'PLCR': PLCR,
-    'PLT': PLT,
-    'WBC': WBC
+        'Hemoglobin': Hemoglobin,
+        'Neutrophils': Neutrophils,
+        'Lymphocytes': Lymphocytes,
+        'MPV': MPV,
+        'PCT': PCT,
+        'PDW': PDW,
+        'RBC': RBC,
+        'HCT': HCT,
+        'MCV': MCV,
+        'MCH': MCH,
+        'MCHC': MCHC,
+        'RDWCV': RDWCV,
+        'RDWSD': RDWSD,
+        'PLCR': PLCR,
+        'PLT': PLT,
+        'WBC': WBC
     }
+
     if st.button("Check Your Condition "):
         prediction = predict_result(data)
         result_text = "Unhealthy" if prediction[0] == 0 else "Healthy"
