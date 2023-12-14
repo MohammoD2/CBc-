@@ -9,8 +9,6 @@ st.title('Welcome To Ibrahim Creation ')
 st.header('Creator- Mohammod Ibrahim Hossain ')
 st.write("Contributor- Saidur Rahman safim")
 st.image('blood.jpg')
-# model_url = "https://github.com/MohammoD2/CBc-/blob/main/model.pkl"
-# scaler_url = "https://github.com/MohammoD2/CBc-/blob/main/scaler.pkl"
 
 # model = joblib.load("E:\\Work files\\CBC prediction\\model.pkl")
 
