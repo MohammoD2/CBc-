@@ -27,7 +27,7 @@ def predict_result(data):
     return predict
 
 def main():
-        st.set_page_config(
+    st.set_page_config(
         page_title="Blood Test Result Predictor",
         page_icon="🩸",
         layout="centered",
