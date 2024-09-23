@@ -27,12 +27,6 @@ def predict_result(data):
     return predict
 
 def main():
-    st.set_page_config(
-        page_title="Blood Test Result Predictor",
-        page_icon="🩸",
-        layout="centered",
-        initial_sidebar_state="expanded"
-    )
     st.title("Blood Test Result Predictor")
 
     Name = st.text_input('Enter Your name:')
